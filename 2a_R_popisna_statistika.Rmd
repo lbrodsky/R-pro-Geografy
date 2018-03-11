@@ -1,0 +1,66 @@
+---
+title: "R Notebook: popisna statistika"
+output: html_notebook
+---
+----------------------------------------------------------------  
+
+### Odhady parametru (vypocty cislenych charakteristik)  
+
+#### ** 1. Charakteristiky polohy a variability kvantitativnich velicin ** 
+
+
+> R poskytuje mnho funkci jak ziskat veliciny popisne statistiky. Charakteristiky popisne statistiky muzeme ziskat pomoci sumarnich funkci nebo jednotlive. 
+
+- `sapply()`: funkce ve ktere lze specifikovat statistickou charakteristiku (mean, sd, var, min, max, median, range, and quantile)
+- `summary()`: funkce poskytujici radu charakteristiky soucasne
+
+Balicek "Hmisc" poskytuje dalsi moznosti `describe(mojedata)`, pripadne `describe.by(mojedata, skupina, ...)`. 
+
+- `mean()`: aritmeticky prumer
+- `weighted.mean(x,w, ...)`: vazeny aritmeticky prumer, x... objekt dat, w... vektor vah
+- `median()`: median - prostredni hodnota 
+- `median()`: median - prostredni hodnota 
+
+- `var()`: rozptyl
+- `sd()`: smerodatna odchylka 
+
+
+```{r}
+# Import dat
+data(Loblolly)
+
+names(Loblolly) # hlavicka
+
+# Popisna statistika 
+summary(Loblolly)
+
+# Prumer pro prvni dva atributy datove tabulky
+sapply(Loblolly[1:2], mean)
+
+# Mira polohy 
+mean_height <- mean(Loblolly$height)
+round(mean_height, 1)  # zaokrouhleno na 1 desetinou 
+median(Loblolly$height)
+
+# Mira variability
+var(Loblolly$height)
+sd(Loblolly$height)
+
+```
+#  
+
+#### ** 2. Graficke nastroje popisne statistiky **  
+
+- `hist()`: histogram
+- `boxplot()`: krabicovy graf (boxplot)
+
+```{r}
+# Histogram vysky stromu
+hist(Loblolly$height, main="Histogram vysky stromu", xlab="Vysky stromu [ft]", ylab="Cetnosti", col="lightgreen")
+
+# Krabicovy graf stari stromu
+boxplot(Loblolly$age, main="Stari stromu", ylab="Roky", col="lightblue")
+```
+
+
+
