@@ -1,0 +1,47 @@
+---
+title: "Reprezentace prostorovch dat v R"
+author: "Lukas Brodsky"
+date: "12/03/2018"
+output: html_document
+---
+---------------------------------------------------------
+
+Integrace geografickych dat do prostredi R je umoznena knihovnou `sp`. V R jsou zavedeny objekty typu 'Spatial' pro vektory i rastry. Tyto objekty je mozne kombinovat s datovym typem 'DataFrame', datove tabulky.  
+
+
+#### 'Spatial'  
+**Zakladni parametry objektu 'Spatial'**:  
+- Obalova zona geografickych dat (bounding box)  
+- CRS reference (Coordinate Reference System)  
+
+`sp` vyuziva knihovnu [Proj4](http://proj4.org/) pro definici souradnicoveho systemu (CRS) parametrem 'Proj4string'. Objekt `sp` nemusi mit vyplnen tento parametr (hodnota NA), ovsem bez moznosti transformace mezi RS.  
+
+  
+**Objekty typu 'Spatial'**  
+- Bodove prvky (2D/3D): `SpatialPoints` pouze souradnice, `SpatialPointsDataFrame` s atributy;
+- Liniove prvky: `SpatialLines`, `SpatialLinesDataFrame`;  
+- Polygony: `SpatialPolygons`, `SpatialPolygonsDataFrame`;  
+- Rastry: `SpatialPixels`, `SpatialPixelsDataFrame`;  
+- Rastry2: `SpatialGrid`, `SpatialGridDataFrame`;
+
+Vektorove pbjekty typu 'Spatial*DataFrames' jsou zjednodusene kolekce geometrickych prvku asociovane s atributy ulozene v datove tabulce prostredi R, GIS-pohled. Jedna se o objekty typu datova tabulka s obdelnikovou strukturou (radky = zaznamy, sloupce = atributy promennych) z analytickeho pohledu R. 
+
+Rastry jsou ulozeny v podobe:  
+- `SpatialPixels` jako pravidelne rozmistene body (`SpatialPoints`);  
+nebo  
+- `SpatialGrid` v podobe matice, chybejici data maji prirazenou hodnotu NA;  
+
+Zakladnim prvkem reprezentace rastru SpatialGrid je trida 'GridTopology' z knihovny `sp`. V teto tride je definovana souradnice pocatku (x, y) prostoroveho objektu, velikost bunky v jednotkach souradnicoveho systemu a pocet bunek v obou souradnicich.  
+
+#### Zakladni metody: 
+- Vyber prostoroveho prvku (bod, linie, polygon, radky/sloupce v gridu): pomoci indexace v hranatych zavorkach `[...]`, stejne jako u datove tabulky;  
+- Vyber atributu: `$` 
+- Ziskani a nastaveni souradnic: `coordinates`
+- Ziskani a nastaveni ohrnicujici obalky: `bbox`
+- Ziskani a nastaveni mapove projekce: `proj4strin`
+
+
+#### Reference:  
+[Stranka knihovny Spatial](https://cran.r-project.org/web/views/Spatial.html)   
+
+---------------------------------------------------------
